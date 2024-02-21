@@ -1,5 +1,5 @@
 # sycl_fun
-A repository to dump my sycl-implemented functions
+A repository to dump my sycl-implemented functions. The code is(can) run in CSC Mahti (https://docs.csc.fi/computing/systems-mahti/).
 
 - mlf_approx.cpp: a sycl implementation for approximating the Mittag-Leffler function (MLF)
 - unif_act_fun.cpp: a sycl implementation of the unified activate function proposed in [1]
