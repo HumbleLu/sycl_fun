@@ -4,7 +4,8 @@
 using namespace sycl;
 
 double unif_act_approx(
-    double f_x, double g_x, 
+    double x, double f_x, double g_x,
+    double GAMMA, 
     double ALPHA_1, double BETA_1, 
     double ALPHA_2, double BETA_2,
     size_t N){
@@ -80,17 +81,28 @@ double unif_act_approx(
     }
 
     // return the sum
-    return num_sum/ den_sum;
+    return x * std::pow(x, GAMMA - 1) * (num_sum/ den_sum);
 }
 
 int main() {
-    // test
-    double x = 1.0;
-    double f_x = exp(x);
-    double g_x = 1.0;
+    // test tanh
+    double x = 1.5;
+    double f_x = x*x;
+    double g_x = x*x;
     
-    double out = unif_act_approx(f_x, g_x, 3.0, 2.0, 1.0, 1.4, 20);
-    std::cout << out << std::endl;
+    double out = unif_act_approx(x, f_x, g_x, 1.0, 2.0, 2.0, 2.0, 1.0, 200);
+    std::cout << "x = " << x << std::endl;
+    std::cout << "approximated tanh(x): " << out << std::endl;
+    std::cout << "std::tanh(x): " << std::tanh(x) << std::endl;
+    
+    // test sigmoid
+    x = 1.5;
+    f_x = -1 * exp(-x);
+    g_x = 0;
+    
+    out = unif_act_approx(x, f_x, g_x, 0, 0, 1.0, 1.0, 1.0, 200);
+    std::cout << "approximated sigmoid(x): " << out << std::endl;
+    std::cout << "1 / (1 + exp(-x)): " << (1 / (1 + exp(-x))) << std::endl;
 
     return 0;
 }
