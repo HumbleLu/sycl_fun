@@ -36,7 +36,7 @@ mlf approximated exp(z): 4.0552
 exp(z): 4.0552
 ```
 
-- mlf_approx.cpp
+- unif_act_fun.cpp
 
 compile .cpp file into a executive:
 ```bash
