@@ -58,6 +58,7 @@ int main() {
     double out = mlf_approx(-z*z, 2.0, 1.0, 20);
     std::cout << "mlf approximated cos(z): " << out << std::endl;
     std::cout << "cos(z): " << cos(z) << std::endl;
+    std::cout << "" << std::endl;
     
     // test exp
     out = mlf_approx(z, 1.0, 1.0, 20);

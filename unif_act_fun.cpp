@@ -94,6 +94,7 @@ int main() {
     std::cout << "x = " << x << std::endl;
     std::cout << "approximated tanh(x): " << out << std::endl;
     std::cout << "std::tanh(x): " << std::tanh(x) << std::endl;
+    std::cout << "" << std::endl;
     
     // test sigmoid
     x = 1.5;

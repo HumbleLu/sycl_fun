@@ -30,6 +30,7 @@ z: 1.4
 Device: NVIDIA A100-SXM4-40GB
 mlf approximated cos(z): 0.169967
 cos(z): 0.169967
+
 Device: NVIDIA A100-SXM4-40GB
 mlf approximated exp(z): 4.0552
 exp(z): 4.0552
@@ -55,6 +56,7 @@ Device: NVIDIA A100-SXM4-40GB
 x = 1.5
 approximated tanh(x): 0.905148
 std::tanh(x): 0.905148
+
 Device: NVIDIA A100-SXM4-40GB
 approximated sigmoid(x): 0.817574
 1 / (1 + exp(-x)): 0.817574
