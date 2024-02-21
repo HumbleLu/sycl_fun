@@ -1,4 +1,5 @@
 #include <sycl/sycl.hpp>
+#include <cmath>
 
 using namespace sycl;
 
@@ -55,15 +56,60 @@ double unif_act_approx(
     }
 
     std::cout << "now reducing.." << std::endl;
+    
+    // Reducing phace
+    // Initilize
+    double num_sum = 0.0;
+    {
+        // Create a buffer for sum to get the reduction results
+        buffer<double> num_sum_buf{&num_sum, 1};
+    
+        // Submit a SYCL kernel into a queue
+        q.submit([&](handler &cgh) {
+          // We can use built-in reduction primitive
+          auto num_sum_reduction = reduction(num_sum_buf, cgh, plus<double>());
+          
+          //# Create accessor for vector_buffer
+          accessor num_vector_accessor (num_vector_buffer, cgh);
+    
+          // A reference to the reducer is passed to the lambda
+          cgh.parallel_for(range<1>{N}, num_sum_reduction,
+                          [=](id<1> idx, auto &reducer) { reducer.combine(num_vector_accessor[idx]); });
+        }).wait();
+    }
+    
+    // Initilize
+    double den_sum = 0.0;
+    {
+        // Create a buffer for sum to get the reduction results
+        buffer<double> den_sum_buf{&den_sum, 1};
+    
+        // Submit a SYCL kernel into a queue
+        q.submit([&](handler &cgh) {
+          // We can use built-in reduction primitive
+          auto den_sum_reduction = reduction(den_sum_buf, cgh, plus<double>());
+          
+          //# Create accessor for vector_buffer
+          accessor den_vector_accessor (den_vector_buffer, cgh);
+    
+          // A reference to the reducer is passed to the lambda
+          cgh.parallel_for(range<1>{N}, den_sum_reduction,
+                          [=](id<1> idx, auto &reducer) { reducer.combine(den_vector_accessor[idx]); });
+        }).wait();
+    }
 
     // return the sum
-    double sum = 0.0;
-    return sum;
+    return num_sum/ den_sum;
 }
 
 int main() {
-    double a = unif_act_approx(1.0, 2.0, 3.0, 2.0, 1.0, 1.4, 10);
-    std::cout << a << std::endl;
+    // test
+    double x = 1.0;
+    double f_x = exp(x);
+    double g_x = 1.0;
+    
+    double out = unif_act_approx(f_x, g_x, 3.0, 2.0, 1.0, 1.4, 20);
+    std::cout << out << std::endl;
 
     return 0;
 }
