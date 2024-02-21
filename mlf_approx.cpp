@@ -51,13 +51,18 @@ double mlf_approx(double z, double ALPHA, double BETA, size_t N){
 
 int main() {
     // test
-    std::cout << "first" << std::endl;
-    double a = mlf_approx(1.0, 2.0, 3.0, 2);
-    std::cout << a << std::endl;
+    double z = 1.4;
+    std::cout << "z: " << z << std::endl;
     
-    std::cout << "seconde" << std::endl;
-    double b = mlf_approx(1.0, 2.0, 3.0, 100);
-    std::cout << b << std::endl;
+    // test cosine 
+    double out = mlf_approx(-z*z, 2.0, 1.0, 20);
+    std::cout << "mlf approximated cos(z): " << out << std::endl;
+    std::cout << "cos(z): " << cos(z) << std::endl;
+    
+    // test exp
+    out = mlf_approx(z, 1.0, 1.0, 20);
+    std::cout << "mlf approximated exp(z): " << out << std::endl;
+    std::cout << "exp(z): " << exp(z) << std::endl;
 
     return 0;
 }
